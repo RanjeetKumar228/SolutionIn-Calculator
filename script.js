@@ -199,44 +199,35 @@ document.addEventListener('DOMContentLoaded', () => {
             return null;
         }
 
-        const apiKey = ""; // keep empty for client-side safety; set server-side or here if you understand the risk
+        // Try local solving first
         const local = tryLocalSolve(problemText);
-        if (!apiKey) {
-            if (local !== null) return String(local);
-            throw new Error('API key not configured and problem could not be solved locally. Provide an API key or rephrase the problem.');
-        }
-
-        // If an API key is provided, call the remote Gemini API
-        const apiUrl = ``;
-        const payload = {
-            contents: [{ parts: [{ text: `Solve the following math word problem. Provide only the final numerical answer, without any accompanying text, units, or explanation. Just the number. Problem: "${problemText}"` }] }]
-        };
-
+        if (local !== null) return String(local);
+        
+        // Use backend proxy for more complex problems
         try {
-            const response = await fetch(apiUrl, {
+            const response = await fetch('http://localhost:3000/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ problem: problemText })
             });
 
             if (!response.ok) {
-                // fallback to local if possible
-                if (local !== null) return String(local);
-                const text = await response.text().catch(() => '');
-                throw new Error(`API request failed with status ${response.status}${text ? ': ' + text : ''}`);
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `Server error: ${response.status}`);
             }
 
             const result = await response.json();
-            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+            
+            // Handle the response from our backend proxy
+            if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
                 return result.candidates[0].content.parts[0].text.trim();
+            } else if (result.text) {
+                return result.text.trim();
             } else {
-                if (local !== null) return String(local);
-                throw new Error('Unexpected response format from the API.');
+                throw new Error('Unexpected response format from the server');
             }
         } catch (err) {
-            // network or other errors -> fallback
-            if (local !== null) return String(local);
-            throw err;
+            throw new Error('Could not solve problem. Please try a simpler problem or check if the backend server is running.');
         }
     }
 
