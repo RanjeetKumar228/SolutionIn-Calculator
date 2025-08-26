@@ -1,0 +1,74 @@
+/* Extracted styles from Index.html */
+/* Custom styles for a modern calculator look */
+body {
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
+}
+
+/* Responsive calculator grid: keeps 4 columns but allows flexible sizing */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.3rem; /* slightly tighter spacing for a smaller footprint */
+    grid-auto-rows: minmax(60px, auto); /* fixed height for consistent layout */
+    width: 100%;
+}
+
+/* Buttons: center content and provide consistent sizing across devices */
+.btn {
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    font-size: 0.9rem; /* slightly smaller for a tighter layout */
+    padding: 0.28rem; /* enforce smaller padding to reduce vertical gaps */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.btn:active {
+    transform: scale(0.95); /* Adds a nice press effect */
+}
+
+/* Make the display text responsive and prevent wrapping issues */
+#display {
+    font-size: clamp(1rem, 3.5vw, 1.5rem); /* make the display '0' noticeably smaller */
+    word-wrap: normal;
+    word-break: keep-all;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.25rem;
+}
+
+@media (max-width: 480px) {
+    #display {
+        font-size: clamp(1.25rem, 8vw, 2.25rem); /* smaller on narrow screens */
+    }
+    .calculator-grid {
+    gap: 0.25rem;
+    grid-auto-rows: minmax(32px, 1fr);
+    }
+    .btn {
+    font-size: 0.85rem;
+    padding: 0.25rem;
+    }
+}
+
+/* Ensure modal is hidden by default and uses flex when opened via JS */
+#wordProblemModal {
+    display: none; /* Hidden by default; toggled with inline style via JS */
+}
+
+/* Simple spinner for loading state */
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
