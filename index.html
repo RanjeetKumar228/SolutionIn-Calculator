@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-slate-900 flex items-center justify-center min-h-screen">
+
+    <!-- Calculator Body -->
+    <div class="w-full max-w-sm sm:max-w-xs mx-auto bg-slate-800 rounded-2xl shadow-2xl p-4 space-y-4">
+        
+        <!-- Display Screen -->
+        <div class="bg-slate-900/50 text-white rounded-lg p-3 h-20 flex items-end justify-end overflow-hidden">
+            <h1 id="display" class="font-medium">0</h1>
+        </div>
+
+        <!-- Calculator Buttons Grid -->
+        <div class="calculator-grid">
+            <!-- Row 1 -->
+            <button data-action="clear" class="btn bg-slate-700 hover:bg-slate-600 text-sky-400 rounded-lg px-3 py-2 aspect-square">C</button>
+            <button data-action="delete" class="btn bg-slate-700 hover:bg-slate-600 text-sky-400 rounded-lg px-3 py-2 aspect-square">DEL</button>
+            <button data-action="append" data-value="%" class="btn bg-slate-700 hover:bg-slate-600 text-sky-400 rounded-lg px-3 py-2 aspect-square">%</button>
+            <button data-action="append" data-value="/" class="btn bg-amber-500 hover:bg-amber-400 text-white rounded-lg px-3 py-2 aspect-square">÷</button>
+            
+            <!-- Row 2 -->
+            <button data-action="append" data-value="7" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">7</button>
+            <button data-action="append" data-value="8" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">8</button>
+            <button data-action="append" data-value="9" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">9</button>
+            <button data-action="append" data-value="*" class="btn bg-amber-500 hover:bg-amber-400 text-white rounded-lg px-3 py-2 aspect-square">×</button>
+            
+            <!-- Row 3 -->
+            <button data-action="append" data-value="4" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">4</button>
+            <button data-action="append" data-value="5" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">5</button>
+            <button data-action="append" data-value="6" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">6</button>
+            <button data-action="append" data-value="-" class="btn bg-amber-500 hover:bg-amber-400 text-white rounded-lg px-3 py-2 aspect-square">-</button>
+            
+            <!-- Row 4 -->
+            <button data-action="append" data-value="1" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">1</button>
+            <button data-action="append" data-value="2" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">2</button>
+            <button data-action="append" data-value="3" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">3</button>
+            <button data-action="append" data-value="+" class="btn bg-amber-500 hover:bg-amber-400 text-white rounded-lg px-3 py-2 aspect-square">+</button>
+            
+            <!-- Row 5 -->
+            <button data-action="append" data-value="0" class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square col-span-2">0</button>
+            <button data-action="append" data-value="." class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-lg px-3 py-2 aspect-square">.</button>
+            <button data-action="calculate" class="btn bg-amber-500 hover:bg-amber-400 text-white rounded-lg px-3 py-2 aspect-square">=</button>
+        </div>
+    <!-- Gemini Feature Button -->
+    <button data-action="open-modal" class="btn w-full text-lg bg-sky-500 hover:bg-sky-400 text-white rounded-lg p-4 mt-4">✨ Solve Problem</button>
+    </div>
+
+    <!-- Word Problem Modal -->
+    <div id="wordProblemModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 rounded-2xl shadow-2xl p-6 w-full max-w-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl text-white font-semibold">Solve a Word Problem</h2>
+                <button data-action="close-modal" class="text-slate-400 hover:text-white">&times;</button>
+            </div>
+            <textarea id="wordProblemInput" class="w-full h-32 bg-slate-700 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., If a box has 12 apples and you buy 3 boxes, how many apples do you have?"></textarea>
+            <div id="modal-error" class="text-red-400 text-sm hidden"></div>
+            <div class="flex justify-end items-center space-x-4">
+                <div id="loadingSpinner" class="spinner hidden"></div>
+                <button data-action="solve" id="solveButton" class="btn bg-sky-500 hover:bg-sky-400 text-white rounded-lg px-6 py-2">Solve</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/script.js" defer></script>
+
+</body>
+</html>
