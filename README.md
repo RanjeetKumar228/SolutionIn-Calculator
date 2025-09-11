@@ -90,7 +90,7 @@ Built with **TailwindCSS + JavaScript (frontend)** and **Node.js + Express (back
     ```bash
       npm run dev
 
-- Visit http://localhost:3000
+- Visit [SolutionIn-Calculator](https://ranjeetkumar228.github.io/SolutionIn-Calculator/)
 
 
 
